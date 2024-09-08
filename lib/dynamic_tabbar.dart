@@ -186,6 +186,8 @@ class _DynamicTabBarWidgetState extends State<DynamicTabBarWidget>
       }
       _tabController = getTabController(initialIndex: activeTabIndex);
 
+      widget.onTabControllerUpdated(_tabController!);
+
       var tabIndex = getOnAddMoveToTab(widget.onAddTabMoveTo);
       if (tabIndex != null) {
         Future.delayed(const Duration(milliseconds: 50), () {
