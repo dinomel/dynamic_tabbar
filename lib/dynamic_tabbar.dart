@@ -180,6 +180,8 @@ class _DynamicTabBarWidgetState extends State<DynamicTabBarWidget>
     super.didUpdateWidget(oldWidget);
 
     if (_tabController?.length != widget.dynamicTabs.length) {
+      final bool tabHasBeenDeleted =
+          (_tabController?.length ?? 0) > widget.dynamicTabs.length;
       var activeTabIndex = getActiveTab();
       if (activeTabIndex >= widget.dynamicTabs.length) {
         activeTabIndex = widget.dynamicTabs.length - 1;
@@ -188,7 +190,9 @@ class _DynamicTabBarWidgetState extends State<DynamicTabBarWidget>
 
       widget.onTabControllerUpdated(_tabController!);
 
-      var tabIndex = getOnAddMoveToTab(widget.onAddTabMoveTo);
+      var tabIndex = getOnAddMoveToTab(
+        tabHasBeenDeleted ? MoveToTab.idol : widget.onAddTabMoveTo,
+      );
       if (tabIndex != null) {
         Future.delayed(const Duration(milliseconds: 50), () {
           _tabController?.animateTo(
